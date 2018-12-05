@@ -893,6 +893,23 @@ Resources:
       Statistic: Sum
       Threshold: 30
       TreatMissingData: notBreaching
+  AWSCW500Alarm:
+    Type: "AWS::CloudWatch::Alarm"
+    Properties:
+      ActionsEnabled: true
+      AlarmActions:
+        - !Ref AWSSNSTopic
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      EvaluationPeriods: 1
+      MetricName: !Join
+        - '-'
+        - - !Ref 'AWS::StackName'
+          - 500Count
+      Namespace: LogMetrics/500s
+      Period: 3600
+      Statistic: Sum
+      Threshold: 2
+      TreatMissingData: notBreaching
   AWSCW403MetricFilter:
     Type: "AWS::Logs::MetricFilter"
     DependsOn: AWSLogsLogGroup
